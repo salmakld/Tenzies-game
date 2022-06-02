@@ -26,24 +26,20 @@ function App() {
 
   function handleDiceClick(id){
     // If die is clicked switch its value
-    const newTenziesArray = [...tenziesArray];
-    for (let i=0; i<newTenziesArray.length; i++){
-      if (newTenziesArray[i].id === id){
-        newTenziesArray[i].chosen = !newTenziesArray[i].chosen
+    setTenziesArray(oldTenziesArray => oldTenziesArray.map(
+      die => {
+        return die.id === id ? {...die, chosen: !die.chosen} : die
       }
-    }
-    setTenziesArray(newTenziesArray)
+    ))
     }
 
   function handleRoll(){
     // Generate random values except for the dice already clicked
-    const newTenziesArray = [...tenziesArray];
-    for (let i=0; i<10; i++){
-      if (!tenziesArray[i].chosen){
-        newTenziesArray[i].value = RandomInt()
+    setTenziesArray(oldTenziesArray => oldTenziesArray.map(
+      die => {
+        return !die.chosen ? {...die, value:RandomInt()} : die
       }
-    } 
-    setTenziesArray(newTenziesArray)
+    ))
     setNumberClicks(oldNumberClicks => oldNumberClicks+1)
   }
   function replay(){
